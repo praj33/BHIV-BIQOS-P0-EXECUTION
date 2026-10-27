@@ -1,0 +1,26 @@
+# Environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+*.cred
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and runtime artifacts
+logs/
+*.log
+
+# Build outputs
+node_modules/
+dist/
+build/
+
