@@ -26,7 +26,10 @@
 | **EVD-NET-02** | `http://163.128.209.18:30308/capabilities` | GET | `401 Unauthorized` | Returns `Missing bearer token`. Proves auth boundary. | 2026-10-26T14:17:18Z |
 | **EVD-NET-03** | `http://163.128.209.18:30308/bcaes/registries/capability/objects` | GET | `200 OK` | Returns `{ "registry_type": "capability", "objects": [] }`. | 2026-10-26T14:17:22Z |
 | **EVD-NET-04** | `http://163.128.209.18:30308/discovery/packages` | GET | `200 OK` | Returns `count: 9` packages, all in state `REGISTERED`. | 2026-10-26T14:17:39Z |
-| **EVD-NET-05** | `http://163.128.209.18:30308/tantra/packages/pkg-4d44c0a2dbc0/runtime` | GET | `200 OK` | Returns `retrieval_readiness.status == "NOT_RETRIEVABLE"`, documents 3 MDU gaps. | 2026-10-26T14:18:02Z |
+| **EVD-NET-05** | `http://163.128.209.18:30308/tantra/packages/pkg-4d44c0a2dbc0/runtime` | GET | `200 OK` | Stage A capture (pre-reseed): `NOT_RETRIEVABLE`, documents 3 MDU gaps. | 2026-10-26T14:18:02Z |
+| **EVD-NET-06** | `http://163.128.209.18:30308/discovery/packages` | GET | `200 OK` | Fresh probe: 12 packages registered; cluster reseeded on 2026-10-28T07:38:09Z. | 2026-10-28T14:02:34Z |
+| **EVD-NET-07** | `http://163.128.209.18:30308/tantra/packages/pkg-4d44c0a2dbc0/runtime` | GET | `404 Not Found` | Proves `pkg-4d44c0a2dbc0` absent post-reseed (ephemeral ID regeneration). | 2026-10-28T14:02:34Z |
+| **EVD-NET-08** | `http://163.128.209.18:30308/tantra/packages/pkg-cd95bf999daa/runtime` | GET | `200 OK` | Evaluated live marine intel envelope: `NOT_RETRIEVABLE` (2 passed, 2 failed). | 2026-10-28T14:03:38Z |
 
 ---
 
@@ -45,6 +48,6 @@
 
 | Evidence ID | Demonstration Description | Target Deliverable | Current Status |
 | :--- | :--- | :--- | :---: |
-| **EVD-DEM-01** | Read-Only TANTRA Discovery & Readiness Run Log | JSON summary output of thin-thread audit | `PENDING` |
+| **EVD-DEM-01** | Read-Only TANTRA Discovery & Readiness Run Log | [`tantra-readiness-pkg-4d44c0a2dbc0.md`](tantra-readiness-pkg-4d44c0a2dbc0.md) | `COMPLETED` |
 | **EVD-DEM-02** | NIYANTRAN Trial Task Execution Output | Signed execution receipt with exit code 0 | `PENDING` |
 | **EVD-DEM-03** | MDU Provenance Event Stream Capture | JSON event list for canonical dataset | `PENDING` |
