@@ -28,7 +28,7 @@
 | **EVD-NET-04** | `http://163.128.209.18:30308/discovery/packages` | GET | `200 OK` | Returns `count: 9` packages, all in state `REGISTERED`. | 2026-10-26T14:17:39Z |
 | **EVD-NET-05** | `http://163.128.209.18:30308/tantra/packages/pkg-4d44c0a2dbc0/runtime` | GET | `200 OK` | Stage A capture (pre-reseed): `NOT_RETRIEVABLE`, documents 3 MDU gaps. | 2026-10-26T14:18:02Z |
 | **EVD-NET-06** | `http://163.128.209.18:30308/discovery/packages` | GET | `200 OK` | Fresh probe: 12 packages registered; cluster reseeded on 2026-10-28T07:38:09Z. | 2026-10-28T14:02:34Z |
-| **EVD-NET-07** | `http://163.128.209.18:30308/tantra/packages/pkg-4d44c0a2dbc0/runtime` | GET | `404 Not Found` | Proves `pkg-4d44c0a2dbc0` absent post-reseed (ephemeral ID regeneration). | 2026-10-28T14:02:34Z |
+| **EVD-NET-07** | `http://163.128.209.18:30308/tantra/packages/pkg-4d44c0a2dbc0/runtime` | GET | `404 Not Found` | Proves `pkg-4d44c0a2dbc0` absent post-reseed (observed package ID rotation across cluster snapshots). | 2026-10-28T14:02:34Z |
 | **EVD-NET-08** | `http://163.128.209.18:30308/tantra/packages/pkg-cd95bf999daa/runtime` | GET | `200 OK` | Evaluated live marine intel envelope: `NOT_RETRIEVABLE` (2 passed, 2 failed). | 2026-10-28T14:03:38Z |
 
 ---
@@ -44,10 +44,17 @@
 
 ---
 
-## 4. Pending Future Demonstration Evidence
+## 4. Demonstration Status & Evidence Log
 
-| Evidence ID | Demonstration Description | Target Deliverable | Current Status |
-| :--- | :--- | :--- | :---: |
-| **EVD-DEM-01** | Read-Only TANTRA Discovery & Readiness Run Log | [`tantra-readiness-pkg-4d44c0a2dbc0.md`](tantra-readiness-pkg-4d44c0a2dbc0.md) | `COMPLETED` |
-| **EVD-DEM-02** | NIYANTRAN Trial Task Execution Output | Signed execution receipt with exit code 0 | `PENDING` |
-| **EVD-DEM-03** | MDU Provenance Event Stream Capture | JSON event list for canonical dataset | `PENDING` |
+> [!IMPORTANT]
+> **Demonstration Boundary Distinction**
+> We strictly distinguish between:
+> 1. **Completed Read-Only TANTRA Readiness Assessment** (`EVD-DEM-01`): Verified inspection of public packages and readiness envelopes.
+> 2. **Pending Resolution of Upstream MDU & Identifier Issues** (`EVD-DEM-03`): Required before packages can achieve `RETRIEVAL_READY`.
+> 3. **Not-Yet-Demonstrated End-to-End Workflow Execution** (`EVD-DEM-02`): Multi-step objective-to-execution-to-verification dispatch through an authorized workflow engine. **This has NOT yet been demonstrated.**
+
+| Evidence ID | Demonstration Scope | Output / Target Document | Execution Status | Boundary Clarification |
+| :--- | :--- | :--- | :---: | :--- |
+| **EVD-DEM-01** | Read-Only TANTRA Discovery & Readiness Assessment | [`tantra-readiness-pkg-4d44c0a2dbc0.md`](tantra-readiness-pkg-4d44c0a2dbc0.md) | **ASSESSMENT COMPLETED** | **Read-only audit only**. Proves public discovery, 404 detection on stale IDs, and readiness evaluation; does **not** prove workflow execution. |
+| **EVD-DEM-02** | Governed End-to-End Workflow Execution (Objective → Execution → Verification) | Signed execution receipt with exit code 0 | **NOT YET DEMONSTRATED** | Dependent on NIYANTRAN contract verification (`TSK-E01`) and designation approval (`DEC-01`). |
+| **EVD-DEM-03** | MDU Provenance Event Stream Integration & Resolution | JSON event list for canonical dataset | **BLOCKED / PENDING** | Dependent on MDU endpoint timeout resolution (`TSK-D01`) and schema alignment (`TSK-D02`). |
