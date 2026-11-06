@@ -73,7 +73,29 @@ The mission of BIQOS P0 is to establish a verified, governed **Objective → Exe
 BHIV-BIQOS-P0-EXECUTION/
 ├── README.md                                # Repository overview, mission, and sitemap (this file)
 ├── .gitignore                               # Clean repository filter (zero secrets, zero build artifacts)
+├── central_depository/
+│   └── MANIFEST.md                          # BHIV Central Depository Package Manifest (CLO Increment)
+├── clo/                                     # CLO (Chief Legal Officer) Agent Capability Increment
+│   ├── schemas/                             # Typed Pydantic models (LegalDocument, MduProvenanceEvent)
+│   ├── registry/                            # Canonical Legal Registry (8 official public statutes)
+│   ├── reasoning/                           # Temporal reasoning engine & Hard Rule 5 evidence guard
+│   ├── adapters/                            # TANTRA, VAJRA, MDU, and InsightFlow subsystem adapters
+│   └── runtime/                             # FastAPI runtime API service (:8085 / in-process)
 ├── docs/
+│   ├── clo/                                 # CLO Agent Documentation, Review Packets & Manifests
+│   │   ├── CLO_BASELINE_REVIEW_PACKET.md    # Phase 1 baseline assessment and scope freeze
+│   │   ├── DAY_BY_DAY_EXECUTION_REPORT.md   # Complete Day 1, 2, and 3 execution and task register
+│   │   ├── LEGAL_CORPUS_MANIFEST.md         # 8 official public statutes with Gazette source URLs
+│   │   ├── API_AND_SCHEMA_NOTES.md          # OpenAPI endpoint contracts, payloads, and error semantics
+│   │   ├── PROPOSAL_TO_MDU_LEGAL_SCHEMA.md  # Formal proposal to Nupur/MDU for canonical schema
+│   │   ├── EXECUTIVE_CONTROL_CENTER_INTEGRATION.md # C-Suite dashboard legal widget spec for Rahil
+│   │   ├── INTEGRATION_STATUS_TABLE.md      # Verified / Mocked / Blocked subsystem matrix
+│   │   ├── TEST_EVIDENCE.md                 # 20/20 automated test outputs and pass logs
+│   │   ├── ROLLBACK_INSTRUCTIONS.md         # Fast git rollback and state isolation procedures
+│   │   ├── LOCAL_RUN_INSTRUCTIONS.md        # Reproducible local execution & Swagger instructions
+│   │   ├── LIMITATIONS_AND_DEPLOYMENT.md    # Declared blockers and next accountable task assignments
+│   │   ├── SAMPLE_EVIDENCE_QUERY.json       # Live runtime execution payload with citations
+│   │   └── sarathi_independent_verification_report.json # SARATHI attestation (VERIFIED_ACCEPTED)
 │   ├── stage-a/
 │   │   └── STAGE_A_GROUND_TRUTH_AUDIT.md    # Full Ground-Truth Audit Deliverables A through J
 │   ├── architecture/
@@ -90,13 +112,42 @@ BHIV-BIQOS-P0-EXECUTION/
 │   │   └── EVIDENCE_INDEX.md                # Test runs, audit reports, and live API captures
 │   └── coordination/
 │       └── TEAM_DELIVERABLES.md             # Cross-team deliverable tracking (Raj, Karana, Harsha, Rayyan)
+├── scripts/
+│   ├── clo_cli.py                           # Interactive CLO query CLI with --as-of-date and --caller
+│   └── verify_sarathi_independent.py        # Independent verification harness for Hemanth (SARATHI)
 └── tests/
-    └── README.md                            # Testing strategy, verification tiers, and evidence generation
+    ├── README.md                            # Testing strategy, verification tiers, and evidence generation
+    └── clo/                                 # Automated CLO pytest suite (20 tests, 100% pass)
 ```
 
 ---
 
-## 6. Maintenance of the Execution Register
+## 6. CLO Agent Capability Increment (Ansh — Build Owner)
+
+The repository hosts the **CLO (Chief Legal Officer) Agent Increment**, establishing the canonical legal knowledge foundation, temporal reasoning engine, and constitutional subsystem adapters aligned with BIQOS:
+- **Canonical Legal Registry**: Ingested 8 official public statutes (including verified amendment and supersession pairs: IT Rules 2011 $\rightarrow$ 2021; IT Act Sec 43A $\rightarrow$ DPDP Act Sec 44) with verifiable Gazette URLs and SHA-256 integrity hashes.
+- **Evidence-First Reasoning**: Implements temporal `as_of_date` resolution, surfaces statutory conflicts without silent resolution, and strictly enforces **Hard Rule 5** (zero evidence strictly yields `conclusion: null` and flags mandatory human review).
+- **Subsystem Adapters**:
+  - **TANTRA**: Participant workload adapter complying with `services/execution/EXECUTION_CONTRACT.md`.
+  - **VAJRA**: Authority boundary adapter enforcing the 8-state deterministic authority lifecycle and Rule 8 Bounded Agent read-only guard.
+  - **MDU**: Append-only provenance event stream mapper and formal schema proposal to Nupur.
+  - **InsightFlow**: Passive-only telemetry emitter complying with `services/insightflow/INTEGRATION_CONTRACT.md`.
+- **How to Test**:
+  ```bash
+  python3 -m pytest tests/clo -v
+  ```
+- **How to Run Interactive CLI**:
+  ```bash
+  python3 scripts/clo_cli.py --query "What are reasonable security safeguards to prevent personal data breach?" --as-of-date 2024-01-15
+  ```
+- **How to Run SARATHI Verification**:
+  ```bash
+  python3 scripts/verify_sarathi_independent.py
+  ```
+
+---
+
+## 7. Maintenance of the Execution Register
 
 The **P0 Execution Register** (`docs/planning/P0_EXECUTION_REGISTER.md`) is updated according to strict status progression rules:
 - `NOT STARTED`: Task defined with acceptance criteria; work has not begun.
@@ -110,7 +161,7 @@ The **P0 Execution Register** (`docs/planning/P0_EXECUTION_REGISTER.md`) is upda
 
 ---
 
-## 7. Safety and Authorization Boundaries
+## 8. Safety and Authorization Boundaries
 
 1. **Zero Credential Retention**: Never commit `.env` files, tokens, API keys, private certificates, or browser cookies to this repository.
 2. **Read-Only Probe Policy**: Only documented public read-only endpoints (`GET /health`, `GET /docs`, `GET /bcaes/*`, `GET /discovery/packages`, `GET /tantra/packages/{id}/runtime`) may be queried.
