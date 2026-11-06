@@ -116,6 +116,6 @@ The implementation conforms directly to the required integration path:
 - **Git Coordinates**:
   - Remote: `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION`
   - Active Branch: `main` (Merged via [PR #1](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/pull/1))
-  - Canonical Commit SHA: `c1dc895d2be29ea96beb06de5e34f8cf2317fd9e`
+  - Canonical Commit SHA: `4ef8c805fc7013e395cebbcf8fdec4e9b0ae2184`
 - **Handover Package**: [`central_depository/MANIFEST.md`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/central_depository/MANIFEST.md)
 
