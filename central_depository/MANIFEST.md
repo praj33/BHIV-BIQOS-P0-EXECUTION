@@ -19,11 +19,13 @@
 | **Package Name** | `bhiv-clo-agent` | `VERIFIED` |
 | **Semantic Version** | `1.0.0-p0` | `VERIFIED` |
 | **Canonical Repository** | `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION` | `VERIFIED` |
-| **Feature Branch** | `feat/clo-agent-increment` | `VERIFIED` |
-| **Pull Request** | `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/pull/1` | `ACTIVE` |
-| **Commit SHA** | `c2651168cd642c1157cf34622d0b8fa51783f245` | `VERIFIED` |
+| **Active Branch** | `main` | `VERIFIED UPSTREAM` |
+| **Pull Request** | `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/pull/1` | `MERGED` |
+| **Latest Commit SHA** | `a5b648a803be81a9f1f0a2024dbdbfc15a45bf13` | `VERIFIED` |
 | **Execution Environment** | Python 3.12 / FastAPI / Uvicorn | `VERIFIED LOCAL` |
-| **Automated Tests** | 20 / 20 Passing (Pytest 8.3.4 · 0.23s) | `PASSING` |
+| **Automated Tests** | 22 / 22 Passing (Pytest 8.3.4 · 0.24s) | `PASSING (100%)` |
+| **Target 7-Hop Flow** | Verified via Script & REST API Suite | `100% OPERATIONAL` |
+| **SARATHI Audit Status** | `docs/clo/sarathi_independent_verification_report.json` | `VERIFIED_ACCEPTED` |
 | **Production Readiness** | Stage B Capability Increment (Deployment/Security proven locally) | `STAGE B VERIFIED` |
 
 ---
@@ -49,8 +51,9 @@ The canonical source code lives in the repository root under `clo/`. This deposi
 
 ## 3. Documentation & Verification Index
 
-| Document Title | Path | Primary Purpose |
+| **Document Title** | **Path** | **Primary Purpose** |
 | :--- | :--- | :--- |
+| **Day-by-Day Execution Report** | `docs/clo/DAY_BY_DAY_EXECUTION_REPORT.md` | Day 1, 2, and 3 mission execution, task completion, and evidence matrix. |
 | **Baseline Review Packet** | `docs/clo/CLO_BASELINE_REVIEW_PACKET.md` | Phase 1 baseline assessment, component classification, scope freeze. |
 | **Legal Corpus Manifest** | `docs/clo/LEGAL_CORPUS_MANIFEST.md` | Authoritative manifest of 8 ingested public legal documents and gazette URLs. |
 | **API & Schema Notes** | `docs/clo/API_AND_SCHEMA_NOTES.md` | OpenAPI routes, typed payload schemas, error semantics, trace IDs. |
