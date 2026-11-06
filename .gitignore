@@ -23,4 +23,9 @@ logs/
 node_modules/
 dist/
 build/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
 

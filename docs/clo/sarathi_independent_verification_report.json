@@ -1,0 +1,39 @@
+{
+  "verifier": "Hemanth (SARATHI Independent Testing Lead)",
+  "timestamp": "2026-11-06T10:28:40.297708+00:00",
+  "build_owner": "Ansh",
+  "target_repo": "praj33/BHIV-BIQOS-P0-EXECUTION",
+  "checks": [
+    {
+      "check": "PYTEST_SUITE_EXECUTION",
+      "tests_passing": 20,
+      "status": "PASS",
+      "exit_code": 0
+    },
+    {
+      "check": "CANONICAL_REGISTRY_INTEGRITY",
+      "document_count": 8,
+      "status": "PASS"
+    },
+    {
+      "check": "TEMPORAL_AS_OF_DATE_EVALUATION",
+      "status": "PASS",
+      "details": "2018 evaluated 2011 rules as CURRENT; 2024 evaluated 2021 rules as CURRENT with supersession notice."
+    },
+    {
+      "check": "SECURITY_FAIL_CLOSED_BOUNDARIES",
+      "status": "PASS",
+      "revoked_status": 403,
+      "suspended_status": 403,
+      "rule_8_direct_mutation_allowed": false
+    },
+    {
+      "check": "RULE_5_ZERO_EVIDENCE_REFUSAL",
+      "status": "PASS",
+      "conclusion_is_none": true,
+      "human_review_flagged": true
+    }
+  ],
+  "overall_status": "VERIFIED_ACCEPTED",
+  "duration_ms": 611
+}
