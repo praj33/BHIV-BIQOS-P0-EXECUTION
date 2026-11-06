@@ -1,9 +1,9 @@
-# Formal Proposal to MDU Authority — Legal Domain Canonical Schema & Provenance Architecture
+# Formal Proposal to MDU Authority — Legal Domain Canonical Schema & Provenance Architecture (Revision 2)
 
-**TO:** Nupur (MDU Authority & Programme Supervisor)  
+**TO:** Nupur Gavane (MDU Authority & Programme Supervisor)  
 **FROM:** Ansh (CLO Build Owner)  
 **DATE:** 2026-11-06  
-**STATUS:** PENDING FORMAL REVIEW (Submitted in compliance with Rule 3 — No Silent Canon Creation)  
+**STATUS:** REVISED SUBMISSION — Addressing MDU Review Feedback of 2026-11-06  
 **SUBJECT:** Canonical Schema Proposal for Legal Domain Knowledge Objects & MDU Event Integration  
 
 ---
@@ -13,27 +13,35 @@
 Under **Constitutional Authority Boundaries (Rule 3)**:
 > *"MDU = schema, memory, ontology, lineage, provenance authority. CLO (Ansh) = legal-domain capability only. No silent canon creation. No silent schema or semantic changes. Any proposed change to a canonical schema goes to Nupur/MDU as a written proposal, not a commit."*
 
-This document serves as the official written proposal to establish the **Legal Domain (`dom-legal`)** canonical data structures and to align the CLO Agent increment with MDU's chronological append-only event stream architecture.
+This revised document addresses each item raised in the MDU Review ([`docs/clo/MDU_REVIEW_OF_CLO_LEGAL_SCHEMA_PROPOSAL.md`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/docs/clo/MDU_REVIEW_OF_CLO_LEGAL_SCHEMA_PROPOSAL.md)). It establishes the canonical structure for the Legal Domain within MDU, conforms strictly to MDU's existing write validator, and adopts the official `BHIV-DS-{DOMAIN}-{NAME}-{NUMBER}` identifier convention.
 
 ---
 
-## 2. Alignment with MDU Architecture & Resolution of Gap BLK-06
+## 2. Alignment with MDU Architecture & Feedback Resolution
 
-In the Stage A Ground-Truth Audit (`STAGE_A_GROUND_TRUTH_AUDIT.md`), gap **BLK-06** highlighted an architectural divergence:
-- Legacy MASTERDB components expect a single `knowledge_object_id` and `lineage_reference` pointer.
-- MDU implements a chronological, append-only event array containing `event_id`, `dataset_id`, `event_type` (`ORIGIN`, `INGESTION`, `VALIDATION`, `RETRIEVAL`), and evidence hashes.
+In response to MDU review findings, the CLO Agent implementation adheres to the following MDU ground-truths:
 
-**CLO Architectural Stance:**  
-The CLO Agent product **explicitly adopts MDU's append-only event stream model**. It rejects synthetic single-pointer workarounds. Every legal document ingestion and reasoning retrieval operation emits an immutable, hash-linked `MduProvenanceEvent`.
+1. **Dataset Identifier Format**: Replaced legacy lowercase `ds-legal-*` with MDU canonical format: `BHIV-DS-LEGAL-{NAME}-{NUMBER}` (uppercase).
+2. **Event Types**: Restated event stream to MDU's accepted write-validator event types:
+   - Accepted: `ORIGIN`, `INGESTION`, `TRANSFORMATION`, `VALIDATION`, `TRUST_CHANGE`, `SCHEMA_CHANGE`.
+   - **`RETRIEVAL` dropped from MDU stream**: Query-time reads are not provenance events in MDU. CLO retains query execution traces internally and within InsightFlow telemetry, not as MDU dataset events.
+3. **Event Fields & Evidence Hashes**:
+   - `id` and `recorded_at` are server-assigned by MDU.
+   - Client actor maps to `recorded_by`.
+   - MDU currently does not have a native `evidence_hash` field. Cryptographic SHA-256 payload hashes are transported inside the `transformation_reference` JSON object.
+4. **Relationship Types**: MDU relationships (`relationship_type`) are stored as strings up to 50 characters, with standard values `DERIVED_FROM` and `DEPENDS_ON`. Novel legal relationships (`AMENDS`, `REPLACES`, `SUPERSEDED_BY`, etc.) are retained inside the CLO document payload (`relations` array) and are **not** written to top-level MDU relationships pending supervisor decision on vocabulary extension.
+5. **Domain Category**: Dataset metadata sets `domain_primary: "LEGAL"`. We formally submit a request to the supervisor to recognize "Legal" as a canonical category with Ansh designated as Domain Owner.
+6. **Hash Ownership**: Acknowledged that MDU does not assign schema hashes; MASTERDB manages `knowledge_hash`.
 
 ---
 
 ## 3. Proposed Canonical Schemas
 
-### 3.1 Domain Identifier Registration
-- **Domain ID**: `dom-legal-regulatory-in`
-- **Class**: Public Regulatory & Statutory Corpus
-- **Jurisdiction**: India (Federal & Intermediary Law)
+### 3.1 Domain Identifier & Metadata
+- **Domain Primary**: `LEGAL`
+- **Domain Sub-classification**: Regulatory & Statutory Corpus
+- **Jurisdiction**: India (Commercial, Intermediary & Data Protection)
+- **Domain Owner**: Ansh (CLO Build Owner)
 
 ### 3.2 Canonical Document Schema (`LegalDocument`)
 ```json
@@ -42,6 +50,7 @@ The CLO Agent product **explicitly adopts MDU's append-only event stream model**
   "title": "LegalDocument",
   "type": "object",
   "required": [
+    "mdu_dataset_id",
     "document_id",
     "title",
     "short_name",
@@ -53,12 +62,20 @@ The CLO Agent product **explicitly adopts MDU's append-only event stream model**
     "retrieval_date",
     "version",
     "status",
-    "mdu_dataset_id",
     "sha256_hash",
     "sections"
   ],
   "properties": {
-    "document_id": { "type": "string", "pattern": "^doc-[a-z0-9-]+$" },
+    "mdu_dataset_id": {
+      "type": "string",
+      "pattern": "^BHIV-DS-LEGAL-[A-Z0-9-]+-[0-9]{3}$",
+      "description": "MDU canonical dataset identifier (e.g., BHIV-DS-LEGAL-DPDP-ACT-2023-001)"
+    },
+    "document_id": {
+      "type": "string",
+      "pattern": "^doc-in-[a-z0-9-]+$",
+      "description": "CLO internal reference handle (e.g. doc-in-dpdp-act-2023)"
+    },
     "title": { "type": "string" },
     "short_name": { "type": "string" },
     "issuing_authority": { "type": "string" },
@@ -72,11 +89,11 @@ The CLO Agent product **explicitly adopts MDU's append-only event stream model**
       "type": "string",
       "enum": ["CURRENT", "AMENDED", "SUPERSEDED", "REPEALED", "TRANSITIONAL", "UNKNOWN"]
     },
-    "mdu_dataset_id": { "type": "string", "pattern": "^ds-legal-[a-z0-9-]+$" },
     "sha256_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
     "relations": {
       "type": "array",
-      "items": { "$ref": "#/$defs/LegalRelation" }
+      "items": { "$ref": "#/$defs/LegalRelation" },
+      "description": "Domain-internal statutory relationships (kept in payload, not top-level MDU relationships)"
     },
     "sections": {
       "type": "array",
@@ -86,13 +103,13 @@ The CLO Agent product **explicitly adopts MDU's append-only event stream model**
   "$defs": {
     "LegalRelation": {
       "type": "object",
-      "required": ["relation_type", "target_document_id", "effective_date", "description"],
+      "required": ["relation_type", "target_dataset_id", "effective_date", "description"],
       "properties": {
         "relation_type": {
           "type": "string",
           "enum": ["AMENDS", "AMENDED_BY", "REPLACES", "SUPERSEDED_BY", "REFERENCES", "REPEALED_BY", "TRANSITIONAL_TO"]
         },
-        "target_document_id": { "type": "string" },
+        "target_dataset_id": { "type": "string" },
         "target_section": { "type": "string" },
         "effective_date": { "type": "string", "format": "date" },
         "description": { "type": "string" }
@@ -115,42 +132,50 @@ The CLO Agent product **explicitly adopts MDU's append-only event stream model**
 }
 ```
 
-### 3.3 MDU Provenance Event Schema (`MduProvenanceEvent`)
+### 3.3 MDU Provenance Event Format
+Aligned directly with MDU's live event model:
 ```json
 {
-  "event_id": "mdu-ev-7f8a9b1c2d3e",
-  "dataset_id": "ds-legal-dpdp-act-2023",
+  "dataset_id": "BHIV-DS-LEGAL-DPDP-ACT-2023-001",
   "event_type": "ORIGIN",
-  "timestamp": "2026-11-06T10:15:30Z",
-  "actor": "CLO_BUILD_OWNER_ANSH",
-  "evidence_hash": "sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
-  "details": {
+  "recorded_by": "CLO_BUILD_OWNER_ANSH",
+  "transformation_reference": {
+    "evidence_hash": "sha256:442d1a1bd144c84a55bbdffc1f94790bc994b9da3051b498eedacd0fda154599",
     "document_id": "doc-in-dpdp-act-2023",
     "source_url": "https://egazette.gov.in/WriteReadData/2023/248045.pdf",
     "publication_date": "2023-08-11",
+    "effective_date": "2023-08-11",
     "version": "1.0.0"
   }
 }
 ```
+*(Server assigns `id` and `recorded_at` upon write).*
 
 ---
 
-## 4. Initial Ingested Corpus Alignment Request
+## 4. Canonical Dataset Manifest for Registration
 
-We request MDU registration for the following 8 canonical datasets:
-1. `ds-legal-dpdp-act-2023`: The Digital Personal Data Protection Act, 2023.
-2. `ds-legal-it-act-2000`: The Information Technology Act, 2000.
-3. `ds-legal-it-amend-2008`: The Information Technology (Amendment) Act, 2008.
-4. `ds-legal-it-rules-2021`: IT (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021.
-5. `ds-legal-it-rules-2011`: IT (Intermediaries guidelines) Rules, 2011 (Superseded).
-6. `ds-legal-spdi-rules-2011`: IT (SPDI) Rules, 2011.
-7. `ds-legal-companies-act-2013`: The Companies Act, 2013 (Fiduciary Duties & Governance).
-8. `ds-legal-contract-act-1872`: The Indian Contract Act, 1872 (Electronic Formation & Legality).
+Upon formal supervisor approval, the following 8 canonical datasets will be registered under the official MDU naming scheme:
+
+| # | Canonical MDU Dataset ID | Document Title & Reference | Status | Primary Authority |
+| :---: | :--- | :--- | :---: | :--- |
+| 1 | `BHIV-DS-LEGAL-DPDP-ACT-2023-001` | Digital Personal Data Protection Act, 2023 (Act 22 of 2023) | `CURRENT` | Ministry of Law and Justice / MeitY |
+| 2 | `BHIV-DS-LEGAL-IT-ACT-2000-001` | Information Technology Act, 2000 (Act 21 of 2000) | `AMENDED` | Ministry of Law and Justice / MeitY |
+| 3 | `BHIV-DS-LEGAL-IT-AMENDMENT-ACT-2008-001` | Information Technology (Amendment) Act, 2008 (Act 10 of 2009) | `CURRENT` | Ministry of Law and Justice |
+| 4 | `BHIV-DS-LEGAL-IT-RULES-2021-001` | IT (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 | `CURRENT` | Ministry of Electronics and IT (MeitY) |
+| 5 | `BHIV-DS-LEGAL-IT-INTERMEDIARY-RULES-2011-001` | IT (Intermediaries guidelines) Rules, 2011 | `SUPERSEDED` | Ministry of Communications and IT |
+| 6 | `BHIV-DS-LEGAL-SPDI-RULES-2011-001` | IT (Reasonable Security Practices and SPDI) Rules, 2011 | `CURRENT` | Ministry of Communications and IT |
+| 7 | `BHIV-DS-LEGAL-COMPANIES-ACT-2013-001` | Companies Act, 2013 (Act 18 of 2013 — Sec 134, 166, 177) | `CURRENT` | Ministry of Corporate Affairs (MCA) |
+| 8 | `BHIV-DS-LEGAL-CONTRACT-ACT-1872-001` | Indian Contract Act, 1872 (Act 9 of 1872 — Sec 10, 23, 73) | `CURRENT` | Legislative Department, Ministry of Law |
 
 ---
 
-## 5. Next Steps for MDU Review
-1. Nupur to review and approve schema syntax and event model alignment.
-2. Once approved, Harsha/MDU to assign canonical schema registry hashes in MASTERDB/MDU.
-3. Zero commits have been or will be made to canonical MDU master repositories without this formal sign-off.
+## 5. Supervisor Decisions Requested
 
+We request Nupur's guidance and formal decisions on:
+1. **Approval of MDU Dataset Naming**: Formal acceptance of `BHIV-DS-LEGAL-{NAME}-{NUMBER}` for the 8 statutory datasets.
+2. **Domain Category Registration**: Formal inclusion of `LEGAL` in the MDU domain registry with Ansh designated as domain owner.
+3. **Relationship Vocabulary Extension**: Supervisor determination whether MDU will formally adopt legal relationship vocabulary (`AMENDS`, `REPLACES`, `SUPERSEDED_BY`) in MDU v2, or permanently maintain them encapsulated in payload attributes.
+4. **Controlled First Registration**: Written authorization to register a single pilot dataset (`BHIV-DS-LEGAL-DPDP-ACT-2023-001`) on the live MDU VM (`https://parakosha.blackholeinfiverse.com`).
+
+Zero commits or live writes have been made or will be made to MDU master datasets without this written authorization.
