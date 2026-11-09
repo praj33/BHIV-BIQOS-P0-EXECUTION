@@ -58,6 +58,7 @@ The canonical source code lives in the repository root under `clo/`. This deposi
 | **Legal Corpus Manifest** | `docs/clo/LEGAL_CORPUS_MANIFEST.md` | Authoritative manifest of 8 ingested public legal documents and gazette URLs. |
 | **API & Schema Notes** | `docs/clo/API_AND_SCHEMA_NOTES.md` | OpenAPI routes, typed payload schemas, error semantics, trace IDs. |
 | **Proposal to MDU** | `docs/clo/PROPOSAL_TO_MDU_LEGAL_SCHEMA.md` | Formal written proposal to Nupur/MDU for canonical legal schema registration. |
+| **MDU Pilot Write Plan** | `docs/clo/MDU_PILOT_TEST_WRITE_PLAN.md` | Isolated, namespaced test write plan submitted to Nupur per supervisor assignment. |
 | **ECC Integration Spec** | `docs/clo/EXECUTIVE_CONTROL_CENTER_INTEGRATION.md` | Integration contract for Rahil (Executive Control Center C-suite dashboard). |
 | **Test Evidence Register** | `docs/clo/TEST_EVIDENCE.md` | Complete terminal outputs for all 25 executed automated test cases. |
 | **Integration Status Matrix** | `docs/clo/INTEGRATION_STATUS_TABLE.md` | Verified / Mocked / Blocked status table across all adjacent platforms. |
