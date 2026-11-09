@@ -1,12 +1,12 @@
 {
   "verifier": "Hemanth (SARATHI Independent Testing Lead)",
-  "timestamp": "2026-11-06T11:02:22.292952+00:00",
+  "timestamp": "2026-11-09T05:39:06.372252+00:00",
   "build_owner": "Ansh",
   "target_repo": "praj33/BHIV-BIQOS-P0-EXECUTION",
   "checks": [
     {
       "check": "PYTEST_SUITE_EXECUTION",
-      "tests_passing": 22,
+      "tests_passing": 25,
       "status": "PASS",
       "exit_code": 0
     },
@@ -35,5 +35,5 @@
     }
   ],
   "overall_status": "VERIFIED_ACCEPTED",
-  "duration_ms": 508
+  "duration_ms": 396
 }

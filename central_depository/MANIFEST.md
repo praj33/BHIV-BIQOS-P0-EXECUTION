@@ -21,9 +21,9 @@
 | **Canonical Repository** | `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION` | `VERIFIED` |
 | **Active Branch** | `main` | `VERIFIED UPSTREAM` |
 | **Pull Request** | `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/pull/1` | `MERGED` |
-| **Latest Commit SHA** | `4ef8c805fc7013e395cebbcf8fdec4e9b0ae2184` | `VERIFIED` |
+| **Latest Commit SHA** | [Latest `main` Commit](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/commits/main) (`9657021`) | `VERIFIED` |
 | **Execution Environment** | Python 3.12 / FastAPI / Uvicorn | `VERIFIED LOCAL` |
-| **Automated Tests** | 22 / 22 Passing (Pytest 8.3.4 · 0.24s) | `PASSING (100%)` |
+| **Automated Tests** | 25 / 25 Passing (Pytest 8.3.4 · 0.27s) | `PASSING (100%)` |
 | **Target 7-Hop Flow** | Verified via Script & REST API Suite | `100% OPERATIONAL` |
 | **SARATHI Audit Status** | `docs/clo/sarathi_independent_verification_report.json` | `VERIFIED_ACCEPTED` |
 | **Production Readiness** | Stage B Capability Increment (Deployment/Security proven locally) | `STAGE B VERIFIED` |
@@ -59,7 +59,7 @@ The canonical source code lives in the repository root under `clo/`. This deposi
 | **API & Schema Notes** | `docs/clo/API_AND_SCHEMA_NOTES.md` | OpenAPI routes, typed payload schemas, error semantics, trace IDs. |
 | **Proposal to MDU** | `docs/clo/PROPOSAL_TO_MDU_LEGAL_SCHEMA.md` | Formal written proposal to Nupur/MDU for canonical legal schema registration. |
 | **ECC Integration Spec** | `docs/clo/EXECUTIVE_CONTROL_CENTER_INTEGRATION.md` | Integration contract for Rahil (Executive Control Center C-suite dashboard). |
-| **Test Evidence Register** | `docs/clo/TEST_EVIDENCE.md` | Complete terminal outputs for all 20 executed automated test cases. |
+| **Test Evidence Register** | `docs/clo/TEST_EVIDENCE.md` | Complete terminal outputs for all 25 executed automated test cases. |
 | **Integration Status Matrix** | `docs/clo/INTEGRATION_STATUS_TABLE.md` | Verified / Mocked / Blocked status table across all adjacent platforms. |
 | **Rollback Instructions** | `docs/clo/ROLLBACK_INSTRUCTIONS.md` | Disaster recovery and emergency state isolation procedures. |
 | **Local Run Guide** | `docs/clo/LOCAL_RUN_INSTRUCTIONS.md` | Reproducible local execution instructions, Swagger docs, cURL queries. |

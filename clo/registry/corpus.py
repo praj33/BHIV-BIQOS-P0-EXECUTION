@@ -31,8 +31,9 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             heading="Grounds for processing personal data",
             text="A person may process the personal data of a Data Principal only in accordance with the provisions of this Act and for a lawful purpose—(a) for which the Data Principal has given her consent; or (b) for certain legitimate uses.",
             keywords=["consent", "processing", "lawful purpose", "legitimate uses", "data fiduciary", "data principal"],
-            effective_date="2023-08-11",
-            amendment_history="Enacted as Act No. 22 of 2023, published in Gazette of India on 11th August, 2023."
+            effective_date="2027-05-13",
+            enactment_date="2023-08-11",
+            amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; scheduled to commence on 2027-05-13 per G.S.R. 843(E) dated 13-11-2025."
         ),
         LegalPassage(
             section_id="sec-dpdp-6",
@@ -40,8 +41,9 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             heading="Consent requirements and withdrawal",
             text="Consent given by the Data Principal shall be free, specific, informed, unconditional and unambiguous with a clear affirmative action, and shall signify an agreement for processing her personal data for the specified purpose.",
             keywords=["consent", "free", "specific", "unambiguous", "withdrawal", "notice"],
-            effective_date="2023-08-11",
-            amendment_history="Enacted as Act No. 22 of 2023."
+            effective_date="2027-05-13",
+            enactment_date="2023-08-11",
+            amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; scheduled to commence on 2027-05-13 per G.S.R. 843(E) dated 13-11-2025."
         ),
         LegalPassage(
             section_id="sec-dpdp-8",
@@ -49,8 +51,9 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             heading="General obligations of Data Fiduciary",
             text="A Data Fiduciary shall protect personal data in its possession or under its control, including in respect of any processing undertaken by it or on its behalf by a Data Processor, by taking reasonable security safeguards to prevent personal data breach.",
             keywords=["obligations", "security safeguards", "data breach", "data fiduciary", "data processor", "reasonable security"],
-            effective_date="2023-08-11",
-            amendment_history="Enacted as Act No. 22 of 2023."
+            effective_date="2027-05-13",
+            enactment_date="2023-08-11",
+            amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; scheduled to commence on 2027-05-13 per G.S.R. 843(E) dated 13-11-2025."
         ),
         LegalPassage(
             section_id="sec-dpdp-44",
@@ -58,8 +61,9 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             heading="Amendments to Information Technology Act, 2000",
             text="In the Information Technology Act, 2000, section 43A shall be omitted; and in section 87, in sub-section (2), clause (ob) shall be omitted.",
             keywords=["amendment", "omission", "section 43A", "compensation", "it act 2000"],
-            effective_date="2023-08-11",
-            amendment_history="Enacted as Act No. 22 of 2023; omits section 43A of IT Act 2000 upon commencement."
+            effective_date="2027-05-13",
+            enactment_date="2023-08-11",
+            amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; Section 44(2) scheduled to commence on 2027-05-13 per G.S.R. 843(E) dated 13-11-2025."
         ),
     ]
     dpdp_raw = "".join(p.text for p in dpdp_passages)
@@ -74,25 +78,25 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
         effective_date="2023-08-11",
         retrieval_date="2026-11-06",
         version="1.0.0",
-        status=DocumentStatus.CURRENT,
+        status=DocumentStatus.TRANSITIONAL,
         relations=[
             LegalRelation(
                 relation_type=RelationType.AMENDS,
                 target_document_id="doc-in-it-act-2000",
                 target_section="Section 43A",
-                effective_date="2023-08-11",
-                description="Section 44 of DPDP Act 2023 omits Section 43A of IT Act 2000."
+                effective_date="2027-05-13",
+                description="Section 44(2) of DPDP Act 2023 omits Section 43A of IT Act 2000 w.e.f. 2027-05-13 per G.S.R. 843(E)."
             ),
             LegalRelation(
                 relation_type=RelationType.TRANSITIONAL_TO,
                 target_document_id="doc-in-spdi-rules-2011",
                 target_section="All Rules",
-                effective_date="2023-08-11",
-                description="SPDI Rules 2011 issued under Section 43A transition into DPDP Act 2023 regime."
+                effective_date="2027-05-13",
+                description="SPDI Rules 2011 issued under Section 43A transition into DPDP Act 2023 regime w.e.f. 2027-05-13."
             )
         ],
         sections=dpdp_passages,
-        mdu_dataset_id="ds-legal-dpdp-act-2023",
+        mdu_dataset_id="BHIV-DS-LEGAL-DPDP-ACT-2023-001",
         sha256_hash=_compute_hash(dpdp_raw)
     )
 
@@ -150,13 +154,13 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             LegalRelation(
                 relation_type=RelationType.AMENDED_BY,
                 target_document_id="doc-in-dpdp-act-2023",
-                target_section="Section 44",
-                effective_date="2023-08-11",
-                description="Section 43A omitted by DPDP Act 2023."
+                target_section="Section 43A",
+                effective_date="2027-05-13",
+                description="Section 43A omitted by Section 44(2) of DPDP Act 2023 w.e.f. 2027-05-13 per G.S.R. 843(E)."
             )
         ],
         sections=it_base_passages,
-        mdu_dataset_id="ds-legal-it-act-2000",
+        mdu_dataset_id="BHIV-DS-LEGAL-IT-ACT-2000-001",
         sha256_hash=_compute_hash(it_raw)
     )
 
@@ -169,7 +173,8 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             text="Where a body corporate, possessing, dealing or handling any sensitive personal data or information in a computer resource which it owns, controls or operates, is negligent in implementing and maintaining reasonable security practices and procedures and thereby causes wrongful loss or wrongful gain to any person, such body corporate shall be liable to pay damages by way of compensation to the person so affected.",
             keywords=["body corporate", "sensitive personal data", "reasonable security practices", "negligence", "compensation", "damages"],
             effective_date="2009-10-27",
-            amendment_history="Inserted by Act 10 of 2009, section 22 (w.e.f. 27-10-2009); subject to omission by Section 44 of DPDP Act 2023."
+            enactment_date="2009-02-05",
+            amendment_history="Inserted by Act 10 of 2009, section 22 (w.e.f. 27-10-2009); omission under Section 44(2) of DPDP Act 2023 scheduled for 2027-05-13 per G.S.R. 843(E). Remains active law prior to 2027-05-13."
         ),
         LegalPassage(
             section_id="sec-it-66c",
@@ -214,13 +219,13 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             LegalRelation(
                 relation_type=RelationType.AMENDED_BY,
                 target_document_id="doc-in-dpdp-act-2023",
-                target_section="Section 44",
-                effective_date="2023-08-11",
-                description="Section 43A omitted by Section 44 of DPDP Act 2023."
+                target_section="Section 43A",
+                effective_date="2027-05-13",
+                description="Section 43A omitted by Section 44(2) of DPDP Act 2023 w.e.f. 2027-05-13 per G.S.R. 843(E)."
             )
         ],
         sections=it_amend_passages,
-        mdu_dataset_id="ds-legal-it-amend-2008",
+        mdu_dataset_id="BHIV-DS-LEGAL-IT-AMENDMENT-ACT-2008-001",
         sha256_hash=_compute_hash(it_amend_raw)
     )
 
@@ -284,7 +289,7 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             )
         ],
         sections=it_rules_2021_passages,
-        mdu_dataset_id="ds-legal-it-rules-2021",
+        mdu_dataset_id="BHIV-DS-LEGAL-IT-RULES-2021-001",
         sha256_hash=_compute_hash(it_rules_21_raw)
     )
 
@@ -341,7 +346,7 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             )
         ],
         sections=it_rules_2011_passages,
-        mdu_dataset_id="ds-legal-it-rules-2011",
+        mdu_dataset_id="BHIV-DS-LEGAL-IT-INTERMEDIARY-RULES-2011-001",
         sha256_hash=_compute_hash(it_rules_11_raw)
     )
 
@@ -400,12 +405,12 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
                 relation_type=RelationType.TRANSITIONAL_TO,
                 target_document_id="doc-in-dpdp-act-2023",
                 target_section="Section 8, Section 44",
-                effective_date="2023-08-11",
-                description="Transitions under DPDP Act 2023 as Section 43A is omitted."
+                effective_date="2027-05-13",
+                description="Transitions under DPDP Act 2023 as Section 43A is omitted w.e.f. 2027-05-13 per G.S.R. 843(E)."
             )
         ],
         sections=spdi_passages,
-        mdu_dataset_id="ds-legal-spdi-rules-2011",
+        mdu_dataset_id="BHIV-DS-LEGAL-SPDI-RULES-2011-001",
         sha256_hash=_compute_hash(spdi_raw)
     )
 
@@ -462,7 +467,7 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             )
         ],
         sections=companies_passages,
-        mdu_dataset_id="ds-legal-companies-act-2013",
+        mdu_dataset_id="BHIV-DS-LEGAL-COMPANIES-ACT-2013-001",
         sha256_hash=_compute_hash(ca_raw)
     )
 
@@ -519,7 +524,7 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             )
         ],
         sections=contract_passages,
-        mdu_dataset_id="ds-legal-contract-act-1872",
+        mdu_dataset_id="BHIV-DS-LEGAL-CONTRACT-ACT-1872-001",
         sha256_hash=_compute_hash(contract_raw)
     )
 

@@ -15,6 +15,7 @@ class DocumentStatus(str, Enum):
     SUPERSEDED = "SUPERSEDED"
     REPEALED = "REPEALED"
     TRANSITIONAL = "TRANSITIONAL"
+    PENDING_COMMENCEMENT = "PENDING_COMMENCEMENT"
     UNKNOWN = "UNKNOWN"
 
 
@@ -48,8 +49,9 @@ class LegalPassage(BaseModel):
     heading: str = Field(..., description="Statutory heading or title")
     text: str = Field(..., description="Verbatim statutory text as published in official gazette")
     keywords: List[str] = Field(default_factory=list, description="Keywords for retrieval indexing")
-    effective_date: str = Field(..., description="Effective date of this passage version (YYYY-MM-DD)")
-    amendment_history: Optional[str] = Field(None, description="Legislative amendment notes")
+    effective_date: str = Field(..., description="Effective/commencement date of this passage (YYYY-MM-DD)")
+    enactment_date: Optional[str] = Field(None, description="Date of statutory enactment / gazette notification (YYYY-MM-DD)")
+    amendment_history: Optional[str] = Field(None, description="Legislative amendment and commencement notes")
 
 
 class LegalDocument(BaseModel):
@@ -90,6 +92,7 @@ class LegalQueryRequest(BaseModel):
     trace_id: Optional[str] = Field(None, description="Distributed execution trace ID")
     caller_identity: Optional[str] = Field(None, description="Identity of caller for VAJRA authority verification")
     auth_token: Optional[str] = Field(None, description="Bearer token for authority gate")
+    tantra_execution_id: Optional[str] = Field(None, description="TANTRA execution identifier if dispatched under TANTRA governance")
 
 
 class EvidencePassage(BaseModel):

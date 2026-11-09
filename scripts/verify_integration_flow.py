@@ -63,7 +63,7 @@ def verify_flow():
     print(f"  ✓ As-of-Date Temporal Resolution: {legal_output.as_of_date_applied}")
     print(f"  ✓ Evidence Status: {legal_output.evidence_status}")
     print(f"  ✓ Verbatim Passage: \"{dpdp_p.verbatim_passage}\"")
-    print(f"  ✓ Version Status: {dpdp_p.version_status_as_of_date}")
+    print(f"  ✓ Version Status: {dpdp_p.version_status_as_of_date} (Scheduled to commence on 2027-05-13 per G.S.R. 843(E))")
     print(f"  ✓ Surfaced Conflict: {legal_output.conflicts_identified[0]}")
 
     # HOP 3

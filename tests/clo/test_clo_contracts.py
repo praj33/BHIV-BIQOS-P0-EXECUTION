@@ -49,7 +49,7 @@ def test_list_canonical_documents(client: TestClient):
     for doc in docs:
         assert doc["source_url"].startswith("http")
         assert len(doc["sha256_hash"]) == 64
-        assert doc["mdu_dataset_id"].startswith("ds-legal-")
+        assert doc["mdu_dataset_id"].startswith("BHIV-DS-LEGAL-") or doc["mdu_dataset_id"].startswith("ds-legal-")
         assert len(doc["sections"]) > 0
 
 

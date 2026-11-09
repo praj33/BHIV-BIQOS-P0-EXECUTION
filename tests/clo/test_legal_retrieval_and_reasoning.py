@@ -35,7 +35,8 @@ def test_evidence_preserved_in_data_protection_query(client: TestClient):
     assert passage["source_url"].startswith("http")
     assert len(passage["verbatim_passage"]) > 20
     assert "personal data" in passage["verbatim_passage"].lower() or "data" in passage["verbatim_passage"].lower()
-    assert passage["version_status_as_of_date"] in ("CURRENT", "AMENDED", "TRANSITIONAL")
+    assert passage["version_status_as_of_date"] in ("CURRENT", "AMENDED", "TRANSITIONAL", "PENDING_COMMENCEMENT")
+    assert data["tantra_execution_id"] is not None and len(data["tantra_execution_id"]) > 0
 
     # Verify limitations survive
     assert len(data["limitations"]) >= 3

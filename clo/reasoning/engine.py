@@ -106,12 +106,25 @@ class LegalReasoningEngine:
                 f"whereas 2011 rules allowed 1-month turnaround."
             )
 
-        # Check if query touches Section 43A of IT Act and DPDP Act 2023 Section 44
+        # Check if query touches Section 43A of IT Act and DPDP Act 2023 Section 44 / Section 8
         if "doc-in-it-amendment-act-2008" in doc_ids and "doc-in-dpdp-act-2023" in doc_ids:
-            conflicts.append(
-                f"Statutory Transition Notice: Section 43A of IT Act 2000 (reasonable security practices and compensation) "
-                f"is omitted by Section 44 of DPDP Act 2023. As-of-date {as_of_date} governs whether Section 43A or DPDP Section 8 applies."
-            )
+            try:
+                as_of_dt = datetime.strptime(as_of_date, "%Y-%m-%d").date()
+                commence_dt = datetime.strptime("2027-05-13", "%Y-%m-%d").date()
+            except Exception:
+                as_of_dt = None
+                commence_dt = None
+
+            if as_of_dt and commence_dt and as_of_dt < commence_dt:
+                conflicts.append(
+                    f"Statutory Transition Notice: DPDP Act 2023 was enacted on 2023-08-11, but Sections 3–17 (including Section 8) and Section 44(2) (omitting Section 43A of IT Act 2000) are scheduled to commence on 2027-05-13 under G.S.R. 843(E) dated 13 November 2025. "
+                    f"As of {as_of_date}, Section 43A of IT Act 2000 remains active, applicable governing law; DPDP Act Section 8 is not yet in force (pending commencement)."
+                )
+            else:
+                conflicts.append(
+                    f"Statutory Transition Notice: Under G.S.R. 843(E), DPDP Act Section 8 and Section 44(2) commenced on 2027-05-13. "
+                    f"As of {as_of_date}, DPDP Act Section 8 is the active governing law, and Section 43A of IT Act 2000 stands omitted."
+                )
 
         # 5. Formulate Evidence-Backed Conclusion
         evidence_status = "CONFLICT_DETECTED" if conflicts else "EVIDENCE_VERIFIED"
@@ -135,6 +148,10 @@ class LegalReasoningEngine:
 
         # 7. Human Review Triggers
         human_review_required = False
+        has_pending_commencement = any(p.version_status_as_of_date == "PENDING_COMMENCEMENT" for p in evidence_passages)
+        if has_pending_commencement:
+            human_review_required = True
+            review_reasons.append("PROVISION_PENDING_COMMENCEMENT: One or more retrieved provisions are enacted but not yet in force as of the evaluation date.")
         if conflicts:
             human_review_required = True
             review_reasons.append("STATUTORY_CONFLICT_DETECTED: Overlapping or superseded legal instruments identified.")
@@ -164,5 +181,6 @@ class LegalReasoningEngine:
             limitations=limitations,
             human_review_required=human_review_required,
             review_reasons=review_reasons,
-            mdu_provenance_event_ids=[]
+            mdu_provenance_event_ids=[],
+            tantra_execution_id=request.tantra_execution_id,
         )

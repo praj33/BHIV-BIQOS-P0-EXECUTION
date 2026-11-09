@@ -75,7 +75,7 @@ The increment establishes a working, evidence-backed CLO Agent foundation that a
 | **Task 9**: Document limitations, rollback & operational requirements | **Ansh** | Operational Documentation | Rollback instructions and declared blockers documented. | `COMPLETE` | [`docs/clo/ROLLBACK_INSTRUCTIONS.md`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/docs/clo/ROLLBACK_INSTRUCTIONS.md) & [`docs/clo/LIMITATIONS_AND_DEPLOYMENT.md`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/docs/clo/LIMITATIONS_AND_DEPLOYMENT.md) |
 | **Task 10**: Submit final repository & handover package | **Ansh / Ranjit** | Central Depository Handover | Package manifest created; branch pushed upstream to `origin/feat/clo-agent-increment`. | `COMPLETE` | [`central_depository/MANIFEST.md`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/central_depository/MANIFEST.md) |
 
-**Day 3 Deliverable**: Working demonstrable CLO increment, 20 passing unit tests, test evidence, integration report, and Central Depository handover package.
+**Day 3 Deliverable**: Working demonstrable CLO increment, 25 passing unit tests, test evidence, integration report, and Central Depository handover package.
 
 ---
 
@@ -110,12 +110,12 @@ The implementation conforms directly to the required integration path:
 
 ## 4. Final Verification Summary
 
-- **Total Test Cases**: 22 automated tests in `tests/clo/`
-- **Pass Rate**: **100% (22 / 22 passing in 0.24 seconds)**
+- **Total Test Cases**: 25 automated tests in `tests/clo/`
+- **Pass Rate**: **100% (25 / 25 passing in 0.27 seconds)**
 - **SARATHI Independent Verification**: `VERIFIED_ACCEPTED` (Attestation report: [`docs/clo/sarathi_independent_verification_report.json`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/docs/clo/sarathi_independent_verification_report.json))
 - **Git Coordinates**:
   - Remote: `https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION`
   - Active Branch: `main` (Merged via [PR #1](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/pull/1))
-  - Canonical Commit SHA: `4ef8c805fc7013e395cebbcf8fdec4e9b0ae2184`
+  - Canonical Commit on `main`: [`9657021`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/commits/main) (25/25 tests passing)
 - **Handover Package**: [`central_depository/MANIFEST.md`](https://github.com/praj33/BHIV-BIQOS-P0-EXECUTION/blob/main/central_depository/MANIFEST.md)
 

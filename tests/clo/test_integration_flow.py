@@ -63,8 +63,11 @@ def test_full_7_hop_target_integration_flow():
     # Check verbatim statutory text preserved
     dpdp_passage = [p for p in legal_output.evidence_passages if p.document_id == "doc-in-dpdp-act-2023"][0]
     assert "reasonable security safeguards to prevent personal data breach" in dpdp_passage.verbatim_passage
-    # Check temporal status
-    assert dpdp_passage.version_status_as_of_date == "CURRENT"
+    # Check temporal status on as-of 2024-01-15: DPDP Sec 8 is PENDING_COMMENCEMENT per G.S.R. 843(E)
+    assert dpdp_passage.version_status_as_of_date == "PENDING_COMMENCEMENT"
+    it_43a_passages = [p for p in legal_output.evidence_passages if p.document_id == "doc-in-it-amendment-act-2008"]
+    assert len(it_43a_passages) >= 1
+    assert it_43a_passages[0].version_status_as_of_date == "CURRENT"
     # Check conflict surfacing
     assert len(legal_output.conflicts_identified) >= 1, "Hop 2 Failed: Statutory transition conflict not surfaced"
 
@@ -220,7 +223,11 @@ def test_full_7_hop_target_integration_flow_via_rest_api(client, vajra, insightf
     dpdp_passages = [p for p in rdata["evidence_passages"] if p["document_id"] == "doc-in-dpdp-act-2023"]
     assert len(dpdp_passages) >= 1
     assert "reasonable security safeguards to prevent personal data breach" in dpdp_passages[0]["verbatim_passage"]
-    assert dpdp_passages[0]["version_status_as_of_date"] == "CURRENT"
+    assert dpdp_passages[0]["version_status_as_of_date"] == "PENDING_COMMENCEMENT"
+    it_43a_passages = [p for p in rdata["evidence_passages"] if p["document_id"] == "doc-in-it-amendment-act-2008"]
+    assert len(it_43a_passages) >= 1
+    assert it_43a_passages[0]["version_status_as_of_date"] == "CURRENT"
+    assert rdata["tantra_execution_id"] is not None and len(rdata["tantra_execution_id"]) > 0
     assert len(rdata["conflicts_identified"]) >= 1, "Hop 2 API Failed: Conflict not surfaced"
 
     # HOP 3: Agent Composition assertions

@@ -89,6 +89,7 @@ def research_legal_query(
     and records MDU provenance and InsightFlow telemetry.
     """
     trace_id = request.trace_id or f"trace-clo-{uuid.uuid4().hex[:12]}"
+    execution_id = request.tantra_execution_id or f"exec-clo-{uuid.uuid4().hex[:12]}"
     caller = request.caller_identity or "ansh_clo_build_owner"
     token = request.auth_token or authorization
 
@@ -113,6 +114,7 @@ def research_legal_query(
     # 2. Execute Reasoning over Corpus
     response = reasoning_engine.reason_over_query(request)
     response.trace_id = trace_id
+    response.tantra_execution_id = execution_id
     response.vajra_trust_status = f"VERIFIED: {auth_result.current_state}"
 
     # 3. Record MDU Provenance Event
@@ -129,7 +131,7 @@ def research_legal_query(
     # 4. Emit Passive InsightFlow Telemetry
     insightflow_adapter.emit_telemetry_event(
         trace_id=trace_id,
-        execution_id=f"exec-clo-{uuid.uuid4().hex[:8]}",
+        execution_id=execution_id,
         event_type="legal_reasoning_query",
         status=response.evidence_status,
         payload={

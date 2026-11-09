@@ -90,6 +90,47 @@ class CanonicalLegalRegistry:
 
         return doc.status, f"Valid status on {as_of_date_str}."
 
+    def get_passage_status_as_of(
+        self, doc: LegalDocument, passage: LegalPassage, as_of_date_str: str
+    ) -> Tuple[DocumentStatus, str]:
+        """
+        Determines the legal status of an individual statutory passage on an explicit as-of date.
+        Distinguishes enactment date from provision-wise commencement date and amendment/omission date.
+        """
+        try:
+            as_of_date = datetime.strptime(as_of_date_str, "%Y-%m-%d").date()
+            p_eff_date = datetime.strptime(passage.effective_date, "%Y-%m-%d").date()
+        except ValueError:
+            return DocumentStatus.UNKNOWN, f"Invalid date format: {as_of_date_str}. Must be YYYY-MM-DD."
+
+        # 1. Check if the specific provision has commenced
+        if as_of_date < p_eff_date:
+            enact_note = f" (enacted {passage.enactment_date or doc.publication_date}; scheduled to commence on {passage.effective_date} per G.S.R. 843(E))" if (passage.enactment_date or doc.publication_date) else ""
+            return (
+                DocumentStatus.PENDING_COMMENCEMENT,
+                f"Provision {passage.section_number} not in force as of {as_of_date_str}{enact_note}."
+            )
+
+        # 2. Check if a subsequent amendment or omission relation affects this specific section
+        for rel in doc.relations:
+            rel_eff = datetime.strptime(rel.effective_date, "%Y-%m-%d").date()
+            if rel.relation_type == RelationType.AMENDED_BY and rel.target_section:
+                sec_clean = passage.section_number.lower().replace(" ", "")
+                target_clean = rel.target_section.lower().replace(" ", "")
+                if sec_clean in target_clean or target_clean in sec_clean:
+                    if as_of_date >= rel_eff:
+                        return (
+                            DocumentStatus.SUPERSEDED,
+                            f"Section {passage.section_number} omitted / amended w.e.f. {rel.effective_date} by {rel.target_document_id}."
+                        )
+
+        # 3. Check if document as a whole is superseded (e.g. IT Intermediary Rules 2011 superseded by 2021)
+        doc_status, doc_reason = self.get_document_status_as_of(doc.document_id, as_of_date_str)
+        if doc_status == DocumentStatus.SUPERSEDED:
+            return DocumentStatus.SUPERSEDED, doc_reason
+
+        return DocumentStatus.CURRENT, f"In force and applicable as of {as_of_date_str}."
+
     def search_passages(
         self,
         query: str,
@@ -99,7 +140,7 @@ class CanonicalLegalRegistry:
         """
         Searches canonical passages matching query tokens.
         Filters stop words and requires substantive domain token hits.
-        Preserves source provenance, verbatim passages, and evaluated temporal status.
+        Preserves source provenance, verbatim passages, and evaluated provision-wise temporal status.
         """
         results: List[Tuple[LegalDocument, LegalPassage, DocumentStatus, str]] = []
         raw_words = re.findall(r"[a-zA-Z0-9]+", query.lower())
@@ -117,9 +158,8 @@ class CanonicalLegalRegistry:
             if jurisdiction and doc.jurisdiction.lower() != jurisdiction.lower():
                 continue
 
-            status, status_reason = self.get_document_status_as_of(doc.document_id, as_of_date_str)
-
             for passage in doc.sections:
+                p_status, p_reason = self.get_passage_status_as_of(doc, passage, as_of_date_str)
                 p_text_lower = passage.text.lower()
                 p_heading_lower = passage.heading.lower()
                 keywords = [k.lower() for k in passage.keywords]
@@ -137,7 +177,7 @@ class CanonicalLegalRegistry:
 
                 # Require a minimum score threshold of 2 to avoid spurious single-word hits
                 if score >= 2:
-                    scored_results.append((score, doc, passage, status, status_reason))
+                    scored_results.append((score, doc, passage, p_status, p_reason))
 
         # Sort descending by score
         scored_results.sort(key=lambda x: x[0], reverse=True)
