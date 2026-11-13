@@ -46,6 +46,16 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; scheduled to commence on 2027-05-13 per G.S.R. 843(E) dated 13-11-2025."
         ),
         LegalPassage(
+            section_id="sec-dpdp-6-9",
+            section_number="Section 6(9)",
+            heading="Registration and regulation of Consent Managers",
+            text="Every Consent Manager shall be registered with the Board in such manner and subject to such technical, operational, financial and other conditions as may be prescribed.",
+            keywords=["consent manager", "registration", "data protection board", "conditions", "prescribed"],
+            effective_date="2026-11-13",
+            enactment_date="2023-08-11",
+            amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; commenced on 2026-11-13 (12 months from G.S.R. 843(E) dated 13-11-2025)."
+        ),
+        LegalPassage(
             section_id="sec-dpdp-8",
             section_number="Section 8",
             heading="General obligations of Data Fiduciary",
@@ -54,6 +64,16 @@ def build_canonical_corpus() -> Dict[str, LegalDocument]:
             effective_date="2027-05-13",
             enactment_date="2023-08-11",
             amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; scheduled to commence on 2027-05-13 per G.S.R. 843(E) dated 13-11-2025."
+        ),
+        LegalPassage(
+            section_id="sec-dpdp-27-1-d",
+            section_number="Section 27(1)(d)",
+            heading="Powers and functions of the Board — Inquiry into Consent Manager breach",
+            text="The Board shall exercise and perform the following powers and functions, namely:— (d) on receipt of an intimation of breach of any condition of registration of a Consent Manager, to inquire into such breach and impose penalty as provided in this Act;",
+            keywords=["data protection board", "powers", "functions", "consent manager", "breach", "inquiry", "penalty"],
+            effective_date="2026-11-13",
+            enactment_date="2023-08-11",
+            amendment_history="Enacted as Act No. 22 of 2023 on 11th August 2023; commenced on 2026-11-13 (12 months from G.S.R. 843(E) dated 13-11-2025)."
         ),
         LegalPassage(
             section_id="sec-dpdp-44",

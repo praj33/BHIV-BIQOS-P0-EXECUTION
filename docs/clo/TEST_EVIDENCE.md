@@ -3,10 +3,10 @@
 **Product:** CLO (Chief Legal Officer) Agent Increment  
 **Build Owner:** Ansh  
 **Test Runner:** `pytest 8.3.4` (Python 3.12.3)  
-**Execution Timestamp:** 2026-11-09T11:09:00Z  
+**Execution Timestamp:** 2026-11-13T14:37:41Z  
 **Target Repository:** `praj33/BHIV-BIQOS-P0-EXECUTION`  
 **Feature Branch:** `main`  
-**Status:** 25/25 PASSING (100% Pass Rate · 0.27s duration)  
+**Status:** 26/26 PASSING (100% Pass Rate · 0.28s duration)  
 
 ---
 
@@ -25,35 +25,36 @@ cachedir: .pytest_cache
 rootdir: /media/ubuntu/New Volume/project/blackhole-infiverse-products/CLO/BHIV-BIQOS-P0-EXECUTION
 plugins: asyncio-0.24.0, anyio-4.14.2, colcon-core-0.19.0, cov-4.1.0
 asyncio: mode=Mode.STRICT, default_loop_scope=None
-collecting ... collected 25 items
+collecting ... collected 26 items
 
-tests/clo/test_clo_contracts.py::test_health_check_contract PASSED       [  4%]
-tests/clo/test_clo_contracts.py::test_list_canonical_documents PASSED    [  8%]
-tests/clo/test_clo_contracts.py::test_get_individual_canonical_document PASSED [ 12%]
-tests/clo/test_integration_flow.py::test_full_7_hop_target_integration_flow PASSED [ 16%]
-tests/clo/test_integration_flow.py::test_full_7_hop_target_integration_flow_via_rest_api PASSED [ 20%]
-tests/clo/test_legal_retrieval_and_reasoning.py::test_evidence_preserved_in_data_protection_query PASSED [ 24%]
-tests/clo/test_legal_retrieval_and_reasoning.py::test_fiduciary_duties_governance_query PASSED [ 28%]
-tests/clo/test_negative_scenarios.py::test_hard_rule_5_zero_evidence_refusal PASSED [ 32%]
-tests/clo/test_negative_scenarios.py::test_conflicting_sources_explicitly_surfaced PASSED [ 36%]
-tests/clo/test_negative_scenarios.py::test_invalid_date_format_handled_gracefully PASSED [ 40%]
-tests/clo/test_security_and_vajra_boundaries.py::test_vajra_valid_caller_granted PASSED [ 44%]
-tests/clo/test_security_and_vajra_boundaries.py::test_vajra_revoked_caller_blocked_fail_closed PASSED [ 48%]
-tests/clo/test_security_and_vajra_boundaries.py::test_vajra_suspended_caller_blocked PASSED [ 52%]
-tests/clo/test_security_and_vajra_boundaries.py::test_vajra_unregistered_subject_blocked PASSED [ 56%]
-tests/clo/test_security_and_vajra_boundaries.py::test_rule_8_bounded_agent_model PASSED [ 60%]
-tests/clo/test_security_and_vajra_boundaries.py::test_truthstore_evidence_recording_auth PASSED [ 64%]
-tests/clo/test_tantra_and_insightflow_integration.py::test_tantra_workload_execution_success PASSED [ 68%]
-tests/clo/test_tantra_and_insightflow_integration.py::test_tantra_workload_unauthorized_signature_rejected PASSED [ 72%]
-tests/clo/test_tantra_and_insightflow_integration.py::test_tantra_failure_isolation_offline_service PASSED [ 76%]
-tests/clo/test_tantra_and_insightflow_integration.py::test_insightflow_passive_telemetry_emission PASSED [ 80%]
-tests/clo/test_temporal_as_of_date.py::test_registry_as_of_date_supersession_logic PASSED [ 84%]
-tests/clo/test_temporal_as_of_date.py::test_api_as_of_date_intermediary_timeline PASSED [ 88%]
-tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_as_of_2024_01_15 PASSED [ 92%]
-tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_as_of_2026_11_07 PASSED [ 96%]
-tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_from_2027_05_13 PASSED [100%]
+tests/clo/test_clo_contracts.py::test_health_check_contract PASSED       [  3%]
+tests/clo/test_clo_contracts.py::test_list_canonical_documents PASSED    [  7%]
+tests/clo/test_clo_contracts.py::test_get_individual_canonical_document PASSED [ 11%]
+tests/clo/test_integration_flow.py::test_full_7_hop_target_integration_flow PASSED [ 15%]
+tests/clo/test_integration_flow.py::test_full_7_hop_target_integration_flow_via_rest_api PASSED [ 19%]
+tests/clo/test_legal_retrieval_and_reasoning.py::test_evidence_preserved_in_data_protection_query PASSED [ 23%]
+tests/clo/test_legal_retrieval_and_reasoning.py::test_fiduciary_duties_governance_query PASSED [ 26%]
+tests/clo/test_negative_scenarios.py::test_hard_rule_5_zero_evidence_refusal PASSED [ 30%]
+tests/clo/test_negative_scenarios.py::test_conflicting_sources_explicitly_surfaced PASSED [ 34%]
+tests/clo/test_negative_scenarios.py::test_invalid_date_format_handled_gracefully PASSED [ 38%]
+tests/clo/test_security_and_vajra_boundaries.py::test_vajra_valid_caller_granted PASSED [ 42%]
+tests/clo/test_security_and_vajra_boundaries.py::test_vajra_revoked_caller_blocked_fail_closed PASSED [ 46%]
+tests/clo/test_security_and_vajra_boundaries.py::test_vajra_suspended_caller_blocked PASSED [ 50%]
+tests/clo/test_security_and_vajra_boundaries.py::test_vajra_unregistered_subject_blocked PASSED [ 53%]
+tests/clo/test_security_and_vajra_boundaries.py::test_rule_8_bounded_agent_model PASSED [ 57%]
+tests/clo/test_security_and_vajra_boundaries.py::test_truthstore_evidence_recording_auth PASSED [ 61%]
+tests/clo/test_tantra_and_insightflow_integration.py::test_tantra_workload_execution_success PASSED [ 65%]
+tests/clo/test_tantra_and_insightflow_integration.py::test_tantra_workload_unauthorized_signature_rejected PASSED [ 69%]
+tests/clo/test_tantra_and_insightflow_integration.py::test_tantra_failure_isolation_offline_service PASSED [ 73%]
+tests/clo/test_tantra_and_insightflow_integration.py::test_insightflow_passive_telemetry_emission PASSED [ 76%]
+tests/clo/test_temporal_as_of_date.py::test_registry_as_of_date_supersession_logic PASSED [ 80%]
+tests/clo/test_temporal_as_of_date.py::test_api_as_of_date_intermediary_timeline PASSED [ 84%]
+tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_as_of_2024_01_15 PASSED [ 88%]
+tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_as_of_2026_11_07 PASSED [ 92%]
+tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_from_2027_05_13 PASSED [ 96%]
+tests/clo/test_temporal_as_of_date.py::test_dpdp_section_6_9_and_section_27_1_d_commencement_boundary_2026_11_13 PASSED [100%]
 
-============================== 25 passed in 0.27s ==============================
+============================== 26 passed in 0.43s ==============================
 ```
 
 ---
@@ -87,3 +88,4 @@ tests/clo/test_temporal_as_of_date.py::test_dpdp_section_8_and_it_section_43a_fr
 | **SCN-23** | `test_dpdp_section_8_and_it_section_43a_as_of_2024_01_15` | **Temporal Law Regression**: Enacted 2023-08-11 but pending commencement (G.S.R. 843(E)); Sec 43A remains `CURRENT`. | `PASS` |
 | **SCN-24** | `test_dpdp_section_8_and_it_section_43a_as_of_2026_11_07` | **Temporal Law Regression**: Evaluates as of current operational date; Sec 8 is `PENDING_COMMENCEMENT`, Sec 43A remains `CURRENT`. | `PASS` |
 | **SCN-25** | `test_dpdp_section_8_and_it_section_43a_from_2027_05_13` | **Temporal Law Regression**: Post-commencement (18 months); Sec 8 becomes `CURRENT`, Sec 43A stands `SUPERSEDED` / omitted. | `PASS` |
+| **SCN-26** | `test_dpdp_section_6_9_and_section_27_1_d_commencement_boundary_2026_11_13` | **12-Month Staged Commencement Boundary (G.S.R. 843(E))**: Verifies Sec 6(9) & 27(1)(d) become `CURRENT` on 13 Nov 2026, while Sec 8 is `PENDING_COMMENCEMENT` and Sec 43A is `CURRENT`. | `PASS` |

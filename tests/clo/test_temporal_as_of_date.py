@@ -215,3 +215,76 @@ def test_dpdp_section_8_and_it_section_43a_from_2027_05_13(client: TestClient, c
     assert any("DPDP Act Section 8 is the active governing law" in c for c in data["conflicts_identified"])
 
 
+def test_dpdp_section_6_9_and_section_27_1_d_commencement_boundary_2026_11_13(client: TestClient, canonical_registry: CanonicalLegalRegistry):
+    """
+    Regression Test 4 (G.S.R. 843(E) dated 13 Nov 2025 - 12-Month Staged Commencement Boundary):
+    On the exact 13 November 2026 boundary:
+    1. Prior to 13 Nov 2026 (as of 2026-11-07 / 2026-11-12):
+       - DPDP Section 6(9) (Consent Manager registration) is PENDING_COMMENCEMENT.
+       - DPDP Section 27(1)(d) (Board inquiry into Consent Manager breach) is PENDING_COMMENCEMENT.
+       - DPDP Section 8 remains PENDING_COMMENCEMENT (18-month staged commencement).
+       - IT Act Section 43A remains CURRENT.
+    2. On 13 Nov 2026 (2026-11-13):
+       - DPDP Section 6(9) becomes CURRENT (in force).
+       - DPDP Section 27(1)(d) becomes CURRENT (in force).
+       - DPDP Section 8 remains PENDING_COMMENCEMENT (scheduled for 2027-05-13).
+       - IT Act Section 43A remains CURRENT (omission scheduled for 2027-05-13).
+    """
+    dpdp_doc = canonical_registry.get_document("doc-in-dpdp-act-2023")
+    sec_6_9 = next(s for s in dpdp_doc.sections if s.section_number == "Section 6(9)")
+    sec_27_1_d = next(s for s in dpdp_doc.sections if s.section_number == "Section 27(1)(d)")
+    sec_8 = next(s for s in dpdp_doc.sections if s.section_number == "Section 8")
+
+    it_doc = canonical_registry.get_document("doc-in-it-amendment-act-2008")
+    sec_43a = next(s for s in it_doc.sections if s.section_number == "Section 43A")
+
+    # --- Phase A: Prior to 13 November 2026 (e.g. 2026-11-07) ---
+    status_69_pre, _ = canonical_registry.get_passage_status_as_of(dpdp_doc, sec_6_9, "2026-11-07")
+    status_27d_pre, _ = canonical_registry.get_passage_status_as_of(dpdp_doc, sec_27_1_d, "2026-11-07")
+    status_8_pre, _ = canonical_registry.get_passage_status_as_of(dpdp_doc, sec_8, "2026-11-07")
+    status_43a_pre, _ = canonical_registry.get_passage_status_as_of(it_doc, sec_43a, "2026-11-07")
+
+    assert status_69_pre == DocumentStatus.PENDING_COMMENCEMENT
+    assert status_27d_pre == DocumentStatus.PENDING_COMMENCEMENT
+    assert status_8_pre == DocumentStatus.PENDING_COMMENCEMENT
+    assert status_43a_pre == DocumentStatus.CURRENT
+
+    # --- Phase B: On exact commencement date 13 November 2026 (2026-11-13) ---
+    status_69_on, reason_69 = canonical_registry.get_passage_status_as_of(dpdp_doc, sec_6_9, "2026-11-13")
+    status_27d_on, reason_27d = canonical_registry.get_passage_status_as_of(dpdp_doc, sec_27_1_d, "2026-11-13")
+    status_8_on, reason_8 = canonical_registry.get_passage_status_as_of(dpdp_doc, sec_8, "2026-11-13")
+    status_43a_on, reason_43a = canonical_registry.get_passage_status_as_of(it_doc, sec_43a, "2026-11-13")
+
+    assert status_69_on == DocumentStatus.CURRENT
+    assert "In force and applicable" in reason_69
+    assert status_27d_on == DocumentStatus.CURRENT
+    assert "In force and applicable" in reason_27d
+
+    # Section 8 and Section 43A maintain their staged positions until 2027-05-13
+    assert status_8_on == DocumentStatus.PENDING_COMMENCEMENT
+    assert "2027-05-13" in reason_8
+    assert status_43a_on == DocumentStatus.CURRENT
+
+    # --- Phase C: API Verification for Consent Manager Query on 2026-11-13 ---
+    req_cm = {
+        "query": "Every Consent Manager shall be registered with the Board and Board inquiry into breach of registration conditions",
+        "as_of_date": "2026-11-13",
+        "caller_identity": "ansh_clo_build_owner",
+        "trace_id": "trace-temporal-cm-2026-11-13"
+    }
+    res_cm = client.post("/api/v1/clo/research", json=req_cm)
+    assert res_cm.status_code == 200
+    data_cm = res_cm.json()
+    assert data_cm["as_of_date_applied"] == "2026-11-13"
+    assert data_cm["tantra_execution_id"] is not None and len(data_cm["tantra_execution_id"]) > 0
+
+    p_69 = [p for p in data_cm["evidence_passages"] if p["document_id"] == "doc-in-dpdp-act-2023" and p["section_number"] == "Section 6(9)"]
+    assert len(p_69) >= 1
+    assert p_69[0]["version_status_as_of_date"] == "CURRENT"
+
+    p_27d = [p for p in data_cm["evidence_passages"] if p["document_id"] == "doc-in-dpdp-act-2023" and p["section_number"] == "Section 27(1)(d)"]
+    assert len(p_27d) >= 1
+    assert p_27d[0]["version_status_as_of_date"] == "CURRENT"
+
+
+

@@ -43,10 +43,10 @@ def run_sarathi_verification():
     test_dir = os.path.join(repo_root, "tests", "clo")
     pytest_exit_code = pytest.main(["-q", test_dir])
     if pytest_exit_code == 0:
-        print("  ✓ Pytest Suite: All tests passed (25/25).")
+        print("  ✓ Pytest Suite: All tests passed (26/26).")
         report["checks"].append({
             "check": "PYTEST_SUITE_EXECUTION",
-            "tests_passing": 25,
+            "tests_passing": 26,
             "status": "PASS",
             "exit_code": 0
         })
